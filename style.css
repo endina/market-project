@@ -65,27 +65,40 @@ html, body {
 
 /* Search Bar */
 .search-bar {
-  flex-grow: 1;
-  display: flex;
-  justify-content: space-between;
-  margin: 0 20px;
+    display: flex;
+    align-items: center;
+    width: 40%;
+    min-width: 300px;
+    position: relative;
+    margin-right: 500px; /* Just for demo purposes */
 }
 
 .search-bar input {
-  max-width: 700px;
-  width: 100%;
-  padding: 10px 15px;
-  border: 2px solid var(--color-secondary-3);
-  border-radius: 25px;
-  outline: none;
-  font-size: 16px;
-  transition: 0.3s;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 100%;
+    padding: 12px 20px;
+    padding-left: 45px;
+    border: 2px var(--color-secondary-2);
+    border-radius: 30px;
+    outline: none;
+    font-size: 16px;
+    transition: 0.3s;
+    box-shadow: 0 2px 5px var(--color-text);
+    background-color: white;
 }
 
 .search-bar input:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 5px var(--color-primary);
+    border-color: #37B5FE;
+    box-shadow: 0 0 8px rgba(55, 181, 254, 0.3);
+}
+
+.search-bar::before {
+    content: '\f002';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 18px;
+    color: #2A7FBD;
+    z-index: 1;
 }
 /* Main */
 .main-content {
