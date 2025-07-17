@@ -87,3 +87,117 @@ html, body {
   border-color: var(--color-primary);
   box-shadow: 0 0 5px var(--color-primary);
 }
+/* Main */
+.main-content {
+  background: white;
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 100px;
+}
+
+/* Categories Section */
+.categories {
+  padding: 150px 0;
+  text-align: center;
+}
+
+.category-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.category-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 130px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.category:hover {
+  transform: translateY(-5px);
+  background: rgba(55, 181, 254, 0.1);
+}
+
+.category-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #f8f8f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: #333;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.category-icon:hover {
+  background-color: var(--color-primary);
+  color: white;
+  transform: scale(1.1);
+}
+
+.category p {
+  margin-top: 15px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.category:hover p {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* Welcome Section */
+.welcome-section {
+  padding: 40px 20px 60px;
+  text-align: center;
+}
+
+.welcome-content h1 {
+  font-size: 42px;
+  color: #222;
+  margin-bottom: 15px;
+  margin-top: -70px;
+}
+
+.welcome-content p {
+  font-size: 18px;
+  color: #444;
+  max-width: 700px;
+  margin: 0 auto 30px;
+  line-height: 1.6;
+}
+
+/* Button */
+.shop-button {
+  display: inline-block;
+  background-color: var(--color-primary);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.shop-button:hover {
+  background-color: var(--color-accent);
+}
