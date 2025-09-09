@@ -214,3 +214,23 @@ html, body {
 .shop-button:hover {
   background-color: var(--color-accent);
 }
+@media (max-width: 768px) 
+{
+.navbar {
+    flex-direction: column;    /* stack items vertically */
+    justify-content: center;   /* center vertically */
+    height: auto;              /* let height adjust */
+    padding: 10px 0;
+  }
+
+  .logo img {
+    margin: 0 auto 10px;       /* center and add spacing below logo */
+  }
+
+  .search-bar {
+    width: 90%;                /* make search bar take most of the width */
+    margin: 0 auto;            /* center it */
+  }
+  
+}
+
