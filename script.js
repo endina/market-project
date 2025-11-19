@@ -15,7 +15,8 @@ function renderProducts(productsToRender, isFullList = false) {
     if (list.length === 0) {
         container.innerHTML = "<p class='col-span-full text-center text-red-500'>Nuk u gjetën produkte.</p>";
     } else {
-        container.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"; // Tailwind grid
+        // Use project CSS grid class so styles are consistent
+        container.className = "products-grid";
         list.forEach(product => {
             container.insertAdjacentHTML('beforeend', generateProductCard(product));
         });
@@ -23,6 +24,9 @@ function renderProducts(productsToRender, isFullList = false) {
 
     moreBtn.style.display = (productsToRender.length > maxProductsToShow && !isFullList) ? "inline-block" : "none";
 }
+
+// Expose renderProducts globally so non-module scripts can call it
+window.renderProducts = renderProducts;
 
 
 // Fetch products from your API
@@ -39,7 +43,7 @@ async function fetchProducts() {
             if (response.ok) break;
 
             if (i === maxRetries - 1)
-                throw new Error("Gabim gjatë marrjes së produkteve pas provave të shumta.");
+                throw new Error("Gabim gjatë marrjes së produkteve");
         }
 
         const data = await response.json();
@@ -48,7 +52,7 @@ async function fetchProducts() {
     } catch (error) {
         console.error(error);
         document.getElementById("products-container").innerHTML =
-            "<p class='text-red-600 font-medium'>Gabim gjatë ngarkimit të produkteve. (Kontrolloni lidhjen e API-t)</p>";
+            "<p class='text-red-600 font-medium'>Gabim gjatë ngarkimit të produkteve</p>";
     }
 }
 

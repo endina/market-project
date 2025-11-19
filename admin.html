@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin - Tag Products | Market Ari-E</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .admin-table { width: 100%; max-width: 1100px; margin: 40px auto; border-collapse: collapse; }
+    .admin-table th, .admin-table td { padding: 8px 10px; border-bottom: 1px solid #eee; text-align: left; vertical-align: middle; }
+    .admin-thumb { width: 64px; height: 48px; object-fit: cover; border-radius: 6px; }
+    .save-indicator { color: green; font-weight: 700; margin-left: 10px; }
+    .admin-actions { display:flex; gap:8px; align-items:center; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo"><a href="index.html"><img src="WhatsApp_Image_2025-07-16_at_20.51.20_1bb258ab-removebg-preview.png" alt="Logo"></a></div>
+    <div style="flex:1"></div>
+    <div style="padding-right:20px"><a href="category.html" class="product-btn">View Categories</a></div>
+  </nav>
+
+  <main class="main-content">
+    <section style="padding: 80px 20px; max-width:1200px; margin:0 auto;">
+      <h1 style="margin-bottom:18px">Admin — Tag Products</h1>
+      <p style="color:#666; margin-bottom:20px">Select a category for products. Changes are saved to your browser's <code>localStorage</code>.</p>
+
+      <div id="admin-area">Loadding products...</div>
+    </section>
+  </main>
+
+  <script type="module" src="script.js"></script>
+  <script src="products.js"></script>
+  <script>
+    const CATEGORY_KEYS = ['','ushqim','pije','higjena','vegla','lodra','shkolle'];
+
+    function productKeyOf(p){ return p.id ?? p.barcode ?? p.emri_produktit; }
+
+    function renderAdminTable(products){
+      const container = document.getElementById('admin-area');
+      if (!products || products.length === 0) { container.innerHTML = '<p>No products found.</p>'; return; }
+
+      const map = window.getCustomCategoryMap ? window.getCustomCategoryMap() : {};
+
+      const table = document.createElement('table');
+      table.className = 'admin-table';
+
+      const thead = document.createElement('thead');
+      thead.innerHTML = '<tr><th>Foto</th><th>Emri</th><th>ID / Barkod</th><th>Current</th><th>Tag</th></tr>';
+      table.appendChild(thead);
+
+      const tbody = document.createElement('tbody');
+
+      products.forEach(p => {
+        const tr = document.createElement('tr');
+        const imgTd = document.createElement('td');
+        const img = document.createElement('img');
+        img.src = p.imageUrl || 'https://placehold.co/200x120/e5e7eb/6b7280?text=Pa+Foto';
+        img.className = 'admin-thumb';
+        imgTd.appendChild(img);
+
+        const nameTd = document.createElement('td');
+        nameTd.textContent = p.emri_produktit || 'Pa emër';
+
+        const idTd = document.createElement('td');
+        const key = productKeyOf(p);
+        idTd.textContent = key;
+
+        const currentTd = document.createElement('td');
+        currentTd.textContent = p.category || map[key] || '';
+
+        const tagTd = document.createElement('td');
+        const select = document.createElement('select');
+        CATEGORY_KEYS.forEach(k => {
+          const opt = document.createElement('option'); opt.value = k; opt.textContent = k === '' ? '(none)' : k;
+          select.appendChild(opt);
+        });
+        select.value = map[key] || p.category || '';
+        select.addEventListener('change', async () => {
+          const val = select.value || null;
+          const ok = window.saveCustomCategory ? window.saveCustomCategory(key, val) : false;
+          if (ok) {
+            currentTd.textContent = val || '';
+            showSaved(select);
+          } else {
+            alert('Failed to save mapping to localStorage.');
+          }
+        });
+        tagTd.appendChild(select);
+
+        tr.appendChild(imgTd);
+        tr.appendChild(nameTd);
+        tr.appendChild(idTd);
+        tr.appendChild(currentTd);
+        tr.appendChild(tagTd);
+        tbody.appendChild(tr);
+      });
+
+      table.appendChild(tbody);
+      container.innerHTML = '';
+      container.appendChild(table);
+    }
+
+    function showSaved(el){
+      const span = document.createElement('span'); span.className='save-indicator'; span.textContent='Saved';
+      el.parentNode.appendChild(span);
+      setTimeout(()=>span.remove(),1200);
+    }
+
+    function onProductsLoaded(e){
+      const products = e.detail && e.detail.products ? e.detail.products : window.allProducts || [];
+      renderAdminTable(products);
+    }
+
+    // if products already loaded, render immediately
+    if (window.allProducts && window.allProducts.length) renderAdminTable(window.allProducts);
+    else document.addEventListener('products:loaded', onProductsLoaded);
+  </script>
+</body>
+</html>

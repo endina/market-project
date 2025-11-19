@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kategoria - Market Ari-E</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">
+      <a href="index.html"><img src="WhatsApp_Image_2025-07-16_at_20.51.20_1bb258ab-removebg-preview.png" alt="Logo"></a>
+    </div>
+    <div class="search-bar">
+      <input type="text" placeholder="Kërko produktet...">
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <section class="products-section py-12 px-4 bg-gray-50">
+      <h2 id="category-title" class="text-3xl font-extrabold text-gray-900 text-center mb-10">Produktet</h2>
+      <div id="products-container" class="products-grid">
+        <p class="col-span-full text-center text-gray-400">Po ngarkojmë produktet...</p>
+      </div>
+      <div class="more-btn-container flex justify-center mt-10">
+        <button id="more-products-btn" class="hidden bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">Më shumë</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth-compat.js"></script>
+
+  <script>
+    // show category in the heading based on URL param
+    const params = new URLSearchParams(window.location.search);
+    const cat = params.get('cat');
+    if (cat) {
+      const title = document.getElementById('category-title');
+      const pretty = cat.charAt(0).toUpperCase() + cat.slice(1);
+      title.textContent = `Kategoria: ${pretty}`;
+    }
+  </script>
+
+  <script type="module" src="script.js"></script>
+  <script src="products.js"></script>
+</body>
+</html>
